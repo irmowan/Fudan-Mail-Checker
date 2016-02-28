@@ -1,0 +1,21 @@
+{
+    "name": "Fudan Mail Checker",
+    "version": "1.0.0",
+    "description": "An automatic fudan mail checker.",
+    "icons": {
+        "16":"16.png"
+    },
+    "background": {
+        "persistent": false,
+        "page": "background.html"
+    },
+    "browser_action": {
+        "default_icon": "16.png"
+    },
+    "permissions": [
+        "alarms",
+        "background",
+        "tabs"
+    ],
+    "manifest_version": 2
+}
