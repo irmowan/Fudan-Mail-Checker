@@ -3,19 +3,22 @@
     "version": "1.0.0",
     "description": "An automatic fudan mail checker.",
     "icons": {
-        "16":"16.png"
+        "16": "16.png",
+        "64": "64.png",
+        "128": "128.png"
     },
     "background": {
         "persistent": false,
         "page": "background.html"
     },
     "browser_action": {
-        "default_icon": "16.png"
+        "default_icon": "128.png"
     },
     "permissions": [
         "alarms",
         "background",
-        "tabs"
+        "tabs",
+        "activeTab"
     ],
     "manifest_version": 2
 }
