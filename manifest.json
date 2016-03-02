@@ -18,7 +18,9 @@
         "alarms",
         "background",
         "tabs",
-        "activeTab"
+        "activeTab",
+        "cookies",
+        "*://*.fudan.edu.cn/"
     ],
     "manifest_version": 2
 }
