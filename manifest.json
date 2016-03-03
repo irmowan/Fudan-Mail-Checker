@@ -11,6 +11,12 @@
         "persistent": false,
         "page": "background.html"
     },
+    "content_scripts":[
+        {
+            "matches":["http://*.fudan.edu.cn/*"],
+            "js":["autoSSL.js"]
+        }
+    ],
     "browser_action": {
         "default_icon": "128.png"
     },
