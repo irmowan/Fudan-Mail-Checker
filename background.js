@@ -2,11 +2,7 @@
  * @author: Irmo(irmowan@gmail.com)
  */
 
-function autoSSL() {
-    console.log("Auto select the SSL checkbox.")
-    var checkboxSSL = document.getElementsByName("useSSL")[0];
-    checkboxSSL.checked = true;
-}
+var requestInterval = 10;   // 10 minutes
 
 function getMailUrl() {
     return "https://mail.fudan.edu.cn/";
@@ -16,13 +12,6 @@ function isMailUrl(url) {
     return url.indexOf(getMailUrl()) == 0;
 }
 
-function logIn() {
-    var loginButton = document.getElementsByName("action:login")[0];
-    console.log(loginButton);
-    loginButton.click();
-}
-
-// TODO: updateIcon
 function updateIcon(num) {
     console.log("updating icon.");
     if (num > 0) {
@@ -64,6 +53,11 @@ function getInboxCount() {
     }
 }
 
+function autoGetInboxCount() {
+    getInboxCount();
+    setTimeout(autoGetInboxCount, 1000 * 60 * requestInterval);
+}
+
 function goToInbox() {
     console.log('Going to fudan mail inbox...');
     chrome.tabs.getAllInWindow(undefined, function(tabs) {
@@ -76,11 +70,15 @@ function goToInbox() {
         }
         console.log('Could not find fudan mail tab. Creating one...');
         chrome.tabs.create({ url: getMailUrl() });
-        // chrome.tabs.executeScript({
-        //     file: "login.js"
-        // });
     });
     getInboxCount();
 }
 
 chrome.browserAction.onClicked.addListener(goToInbox);
+
+if (chrome.runtime && chrome.runtime.onStartup) {
+    chrome.runtime.onStartup.addListener(function() {
+        console.log('Starting browser... updating icon.');
+        autoGetInboxCount();
+    });
+}
