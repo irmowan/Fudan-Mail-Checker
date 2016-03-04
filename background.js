@@ -9,7 +9,7 @@ function autoSSL() {
 }
 
 function getMailUrl() {
-    return "http://mail.fudan.edu.cn/";
+    return "https://mail.fudan.edu.cn/";
 }
 
 function isMailUrl(url) {
