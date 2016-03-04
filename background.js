@@ -23,8 +23,13 @@ function logIn() {
 }
 
 // TODO: updateIcon
-function updateIcon() {
-
+function updateIcon(num) {
+    console.log("updating icon.");
+    if (num > 0) {
+        chrome.browserAction.setBadgeText({ text: num + '' });
+    } else {
+        chrome.browserAction.setBadgeText({ text: '' });
+    }
 }
 
 function getInboxCount() {
@@ -35,12 +40,14 @@ function getInboxCount() {
             if (xhr.responseText) {
                 console.log("Get HTTP response.");
                 // Get the number of unread mails in inbox.
-                regexp = /id="navNewCount_1">\((\d+)\)/g;
                 try {
+                    regexp = /id="navNewCount_1">\((\d+)\)/g;
                     var unread = regexp.exec(xhr.responseText)[1];
                     console.log("You have " + unread + " unread mail(s).");
+                    updateIcon(parseInt(unread));
                 } catch (e) {
                     console.log("No unread mail.");
+                    updateIcon(0);
                 }
             }
         }
@@ -63,16 +70,12 @@ function goToInbox() {
         for (var i = 0, tab; tab = tabs[i]; i++) {
             if (tab.url && isMailUrl(tab.url)) {
                 console.log('Found fudan mail tab: ' + tab.url + '. ' + 'Focusing and refreshing count...');
-                chrome.tabs.update(tab.id, {
-                    selected: true
-                });
+                chrome.tabs.update(tab.id, { selected: true });
                 return;
             }
         }
         console.log('Could not find fudan mail tab. Creating one...');
-        chrome.tabs.create({
-            url: getMailUrl()
-        });
+        chrome.tabs.create({ url: getMailUrl() });
         // chrome.tabs.executeScript({
         //     file: "login.js"
         // });
