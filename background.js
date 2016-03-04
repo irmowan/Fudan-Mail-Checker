@@ -27,25 +27,31 @@ function updateIcon() {
 
 }
 
-// TODO: Get inbox unread count
 function getInboxCount() {
     xhr = new XMLHttpRequest();
     try {
         xhr.onreadystatechange = function() {
-            if (xhr.readyState != 4) return;
-            if (xhr.responseXML) {
-                alert(xhr.responseXML);
-                var xmlDoc = xhr.responseXML;
+            if (this.readyState != 4) return;
+            if (xhr.responseText) {
+                console.log("Get HTTP response.");
+                // Get the number of unread mails in inbox.
+                regexp = /id="navNewCount_1">\((\d+)\)/g;
+                try {
+                    var unread = regexp.exec(xhr.responseText)[1];
+                    console.log("You have " + unread + " unread mail(s).");
+                } catch (e) {
+                    console.log("No unread mail.");
+                }
             }
         }
         xhr.open("POST", getMailUrl() + "coremail/index.jsp", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         // TODO:!!Notice: Here uid and password should be replaced.
         // TODO: Use localStorage, avoid making uid and password written in code.
         uid = "";
         password = "";
-        xhr.send("locale=zh_CN&uid=" + uid + "&nodetect=false&domain=fudan.edu.cn&password=" + password + "&useSSL=true&action:login=");
+        xhr.send("locale=zh_CN&uid=" + uid + "&nodetect=false&domain=fudan.edu.cn&password=" + password + "&useSSL=true&action%3Alogin=");
         console.log("HTTP request posted.");
-        alert(xhr.responseXML);
     } catch (e) {
         console.error("Cannot get in inbox.");
     }
