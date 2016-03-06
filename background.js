@@ -2,7 +2,7 @@
  * @author: Irmo(irmowan@gmail.com)
  */
 
-var requestInterval = 10;   // 10 minutes
+var requestInterval = 10; // 10 minutes
 
 function getMailUrl() {
     return "https://mail.fudan.edu.cn/";
@@ -29,6 +29,7 @@ function getInboxCount() {
             if (xhr.responseText) {
                 console.log("Get HTTP response.");
                 // Get the number of unread mails in inbox.
+                // TODO: Fix bug: if it cannot get in the inbox, it will also say "no unread mail."
                 try {
                     regexp = /id="navNewCount_1">\((\d+)\)/g;
                     var unread = regexp.exec(xhr.responseText)[1];
@@ -44,8 +45,8 @@ function getInboxCount() {
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         // TODO:!!Notice: Here uid and password should be replaced.
         // TODO: Use localStorage, avoid making uid and password written in code.
-        uid = "";
-        password = "";
+        uid = localStorage["user"];
+        password = localStorage["pswd"];
         xhr.send("locale=zh_CN&uid=" + uid + "&nodetect=false&domain=fudan.edu.cn&password=" + password + "&useSSL=true&action%3Alogin=");
         console.log("HTTP request posted.");
     } catch (e) {
@@ -82,3 +83,16 @@ if (chrome.runtime && chrome.runtime.onStartup) {
         autoGetInboxCount();
     });
 }
+
+chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+    console.log("Received method: " + request.method);
+    switch (request.method) {
+        // TODO:getLocalStorage
+        case "setLocalStorage":
+            window.localStorage = request.data;
+            // saveToStorage();
+            // sendResponse({ data: localStorage });
+            break;
+        default:
+    }
+});
