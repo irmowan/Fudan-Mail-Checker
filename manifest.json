@@ -14,7 +14,7 @@
     "content_scripts":[
         {
             "matches":["http://mail.fudan.edu.cn/"],
-            "js":["autoSSL.js"],
+            "js":["js/autoSSL.js"],
             "run_at":"document_end"
         }
     ],
