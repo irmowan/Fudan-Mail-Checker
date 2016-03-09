@@ -13,7 +13,7 @@ function isMailUrl(url) {
 }
 
 function updateIcon(num) {
-    console.log("updating icon.");
+    console.log("Updating icon with number " + num + '.');
     if (num > 0) {
         chrome.browserAction.setBadgeText({ text: num + '' });
     } else {
@@ -28,8 +28,16 @@ function getInboxCount() {
             if (this.readyState != 4) return;
             if (xhr.responseText) {
                 console.log("Get HTTP response.");
+                // Test whether succeed logging in.
+                try {
+                    regexp_test = /account/g;
+                    var test = regexp_test.exec(xhr.responseText)[0];
+                } catch (e) {
+                    console.log("Cannot get in inbox, please check your settings.");
+                    updateIcon(0);
+                    return;
+                }
                 // Get the number of unread mails in inbox.
-                // TODO: Fix bug: if it cannot get in the inbox, it will also say "no unread mail."
                 try {
                     regexp = /id="navNewCount_1">\((\d+)\)/g;
                     var unread = regexp.exec(xhr.responseText)[1];
@@ -41,10 +49,9 @@ function getInboxCount() {
                 }
             }
         }
+        // Set the parameters and send the request.
         xhr.open("POST", getMailUrl() + "coremail/index.jsp", true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        // TODO:!!Notice: Here uid and password should be replaced.
-        // TODO: Use localStorage, avoid making uid and password written in code.
         uid = localStorage["user"];
         password = localStorage["pswd"];
         if (uid == undefined || password == undefined) {
@@ -93,10 +100,9 @@ if (chrome.runtime && chrome.runtime.onStartup) {
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
     console.log("Received method: " + request.method);
     switch (request.method) {
-        // TODO:getLocalStorage
         case "setLocalStorage":
             window.localStorage = request.data;
-            console.log("Settings updated.")
+            console.log("Settings updated.");
             break;
         case "getInboxCount":
             getInboxCount();
