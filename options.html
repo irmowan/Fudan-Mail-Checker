@@ -1,25 +1,57 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8"/>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <title>Settings</title>
         <link href="css/options.css" type="text/css" rel="stylesheet">
     </head>
-    <body>
-        <fieldset>
-            <legend>登录设置</legend>
-            <label for="">Username:</label>
-            <input type="text" name="username" id="username" value="" required>
-            <br>
-            <label for="password">Password:</label>
-            <input type="password" name="password" id="password" value="" required>
-        </fieldset>
-        <fieldset>
-            <legend>其他设置</legend>
-        </fieldset>
-        <div>
-            <input type="button" id="save" value="保存"/>
+    <body class="options">
+        <div id="wrapper">
+            <div id="header">
+                <h1>Fudan Mail Checker 设置</h1>
+            </div>
+            <div id="options">
+                <fieldset>
+                    <legend>登录设置</legend>
+                    <label for="">用户名</label>
+                    <input type="text" name="username" id="username" value="" required>
+                    <br>
+                    <label for="password">密&nbsp&nbsp&nbsp码</label>
+                    <input type="password" name="password" id="password" value="" required>
+                </fieldset>
+                <fieldset>
+                    <legend>其它设置</legend>
+                    <label for="">刷新间隔</label>
+                    <select class="" name="interval" id="interval">
+                        <option value="5">
+                            5 minutes</option>
+                        <option value="10">
+                            10 minutes</option>
+                        <option value="30">
+                            30 minutes</option>
+                        <option value="60">
+                            60 minutes</option>
+                        <option value="120">
+                            120 minutes</option>
+                    </select>
+                </fieldset>
+                <fieldset>
+                    <legend>说明</legend>
+                    <div class="" style="align-left">
+                        <p>
+                            默认为fudan.edu.cn域名，用户名不需要再添加后缀。
+                        </p>
+                    </div>
+                </fieldset>
+                <div id="tip">
+                    <span></span>
+                </div>
+            </div>
+            <div id="action_panel">
+                <span id="status" style="color:red;font-size:12px;"></span>
+                <input type="button" id="save" value="保存"/>
+            </div>
         </div>
-        <script type="text/javascript" src="js/options.js" charset="UTF-8"></script>
     </body>
+    <script type="text/javascript" src="js/options.js" charset="UTF-8"></script>
 </html>

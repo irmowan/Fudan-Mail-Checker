@@ -1,0 +1,78 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    overflow-y: scroll !important;
+    font: 15px/1.5 Helvetica, arial, sans-serif;
+    background: #ccc url(../img/bg-pattern.png);
+}
+label {
+    width: 70px;
+    display: inline-block;
+    text-align: center;
+}
+#wrapper {
+    width: 500px;
+    margin: 40px auto 80px auto;
+    border: 1px solid #fff;
+    -webkit-box-shadow: #404040 0 5px 10px;
+    background-color: #FFF;
+    -webkit-border-radius: 5px;
+}
+#header {
+    position: relative;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#eceff5));
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    border-bottom: 1px solid #ddd;
+}
+#header h1 {
+    margin: 0;
+    line-height: 40px;
+    text-indent: 10px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #5d758a;
+    text-shadow: 0 1px 0 #fff;
+    font-weight: bold;
+}
+#options {
+    padding: 30px 10px 10px 10px;
+    position: relative;
+}
+#options fieldset {
+    border: 1px solid #eee;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+#options fieldset legend {
+    color: #999;
+    font-size: 15px;
+    padding: 0 5px;
+}
+#options fieldset p::before {
+    content: '   ';
+}
+#tip {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 12px;
+    padding: 5px 0;
+    width: 100%;
+    text-align: center;
+    background-color: green;
+    font-weight: bold;
+    color: #fff;
+}
+#action_panel {
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f5f5f5), to(#eceff5));
+    border-top: 1px solid #ddd;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    text-align: right;
+    padding: 6px 10px;
+}

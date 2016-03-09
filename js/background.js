@@ -47,15 +47,21 @@ function getInboxCount() {
         // TODO: Use localStorage, avoid making uid and password written in code.
         uid = localStorage["user"];
         password = localStorage["pswd"];
+        if (uid == undefined || password == undefined) {
+            console.log("User or password is empty.");
+            return;
+        }
         xhr.send("locale=zh_CN&uid=" + uid + "&nodetect=false&domain=fudan.edu.cn&password=" + password + "&useSSL=true&action%3Alogin=");
         console.log("HTTP request posted.");
     } catch (e) {
-        console.error("Cannot get in inbox.");
+        console.error("Cannot get in inbox. Something wrong.");
     }
 }
 
 function autoGetInboxCount() {
     getInboxCount();
+    if (localStorage["interval"] != undefined)
+        requestInterval = localStorage["interval"];
     setTimeout(autoGetInboxCount, 1000 * 60 * requestInterval);
 }
 
@@ -90,8 +96,10 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
         // TODO:getLocalStorage
         case "setLocalStorage":
             window.localStorage = request.data;
-            // saveToStorage();
-            // sendResponse({ data: localStorage });
+            console.log("Settings updated.")
+            break;
+        case "getInboxCount":
+            getInboxCount();
             break;
         default:
     }
